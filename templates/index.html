@@ -1,0 +1,109 @@
+{%load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>.topright {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            font-size: 18px;
+          }
+          .info {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+          }
+          
+        </style>
+       
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Multiple Markers Google Maps</title>
+        <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.11&sensor=false" type="text/javascript"></script>
+        <script type="text/javascript">
+        // check DOM Ready
+        $(document).ready(function() {
+            // execute
+            (function() {
+                // map options
+                var options = {
+                    zoom: 5,
+                    center: new google.maps.LatLng(27.023, 74.217), // centered India
+                    mapTypeId: google.maps.MapTypeId.TERRAIN,
+                    mapTypeControl: false
+                };
+
+                // init map
+                var map = new google.maps.Map(document.getElementById('map_canvas'), options);
+
+                // NY and CA sample Lat / Lng
+                var southWest = new google.maps.LatLng(40.744656, -74.005966);
+                var northEast = new google.maps.LatLng(34.052234, -118.243685);
+                var lngSpan = northEast.lng() - southWest.lng();
+                var latSpan = northEast.lat() - southWest.lat();
+               
+                // set multiple marker
+                {% for x in users %}
+                   
+                 //for (var i = 30, j= 80; i < 100, j<150; i++,j++) {
+                    // init markers
+                    var i = '{{x.profile.lattitude}}' ;
+                    var j = '{{x.profile.longitude}}' ;
+                    {% if x.profile.is_helper %}
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(i, j),
+                        map: map,
+                        icon: {
+                            url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
+                            
+                            
+                            scale: 1
+                        },
+                        title: 'HELPER'
+                        
+                       
+                        
+                        
+                    });
+                    {% else %}
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(i, j),
+                        map: map,
+                        icon: {
+                            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                            
+                            
+                            scale: 1
+                        },
+                        title: 'NEEDS HELP'
+                        
+                       
+                        
+                        
+                    });
+                    {% endif %}
+                    // process multiple info windows
+                    (function(marker, i) {
+                        // add click event
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infowindow = new google.maps.InfoWindow({
+                                content: '{{x.first_name}}, {{x.profile.phone}}, {{x.profile.bio}}'
+                            });
+                            infowindow.open(map, marker);
+                        });
+                    })(marker, i);
+                {% endfor %}
+            })();
+        });
+        </script>
+    </head>
+    <body>
+        <div class="logo">COVID HELP TRACKER</a></div>
+        <div class="info">
+            <p><strong>INFO</strong> your location has been marked on the map, the nearby help available is shown in GREEN, and the locations of those in need of help is shown in RED</p>
+          </div>
+        <div id="map_canvas" style="width: 800px; height:500px;"></div>
+        
+        <li><a  class="topright" href="logout">Logout</a></li>
+    </body>
+</html>

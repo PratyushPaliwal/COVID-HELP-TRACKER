@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% csrf_token %}
+<html>
+<head>
+	<title>Pop up Login</title>
+  <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+   <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+   <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <!--Include Font Awesome-->    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+  <script>
+     $(document).ready(function(){
+         $("#myModal").modal('show');
+     });
+</script>
+</head>
+<body>
+  <!--POP UP Login-->
+  <div id="myModal" class="modal fade login-register-form" role="dialog">
+    <div class="modal-dialog cascading-modal modal-sm">
+        <div class="modal-content">
+            <div class="modal-c-tabs">
+              <ul class="nav nav-tabs navbar-inverse">
+                <li class="nav-item active">
+                  <a class="nav-link" data-toggle="tab" role="tabs" href="#Login"><i class="fas fa-user mr-auto"></i> Login</li></a>
+                </li>
+                  <li class="nav-item" >
+                    <a class="nav-link" data-toggle="tab" role="tabs" href="#Register"><i class="fas fa-user-plus"></i> Register</a></li>
+                  </li>
+            </ul>
+           </div>
+         <!--Panel Login-->
+         <div class="modal-body mb-1">
+           <!--Login Body-->
+           <form action="login" method="POST">
+             {% csrf_token %}
+           <div class="tab-content"> 
+            <p>Welcome to COVID help portal, here you can either help those in need or can get help by marking your location on map</p>
+            <p>If already registered login, if a new user register</p>
+            <div class="tab-pane fade in active" id="Login">
+              
+              <div class="md-form form-sm mb-5">
+              
+                <i class="fas fa-user prefix"></i>
+               
+                 <input type="text" name="username" class="form-control form-control-sm validate" placeholder="Username">
+                 <div class="md-form form-sm mb-4">
+                   <i class="fas fa-lock prefix"></i>
+                   <input type="password" name="password" class="form-control validate" placeholder="Password">
+                 </div>
+                 <div class="text-center mt-2">
+                   <button class="btn btn-info" action= "./login">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                 </div>
+                 <div class="options text-center text-md-right mt-1">
+                    <p>Not a member? <a href="#Register" class="blue-text" action="/">Sign Up</a></p>
+                   <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                 </div>
+                 <div>
+                    {%for message in messages %}
+                    <h3> {{message}} </h3>
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </form>
+            <!--Register panel-->
+           
+              <div class="tab-pane fade" id="Register">
+                <form action="register" method="POST">
+                 {% csrf_token %}
+                <!--Register Body-->
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-user"></i>
+                  <input type="text" name="first_name" class="form-control form-control-sm validate" placeholder="First name">
+                </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-user prefix"></i>
+                  <input type="text" name="last_name" class="form-control form-control-sm validate" placeholder="Last name">
+                </div>
+                <div class="md-form form-sm mb-5">
+                    <i class="fas fa-envelope prefix"></i>
+                    <input type="text" name="phone" class="form-control form-control-sm validate" placeholder="Enter your 10 digit Mobile no.">
+                </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-envelope prefix"></i>
+                  <p>Are you a Helper/ You want to Help:</p>
+                  <input type="radio" id="Yes" name="is_helper" value="True">
+                  <label for="Yes">Yes</label><br>
+                  <input type="radio" id="No" name="is_helper" value="False">
+                  <label for="No">No, I WANT HELP</label><br>
+                </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-user"></i>
+                  <input type="text" name="username" class="form-control form-control-sm validate" placeholder="Username">
+                </div>
+                <div class="md-form form-sm mb-5">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" name="password1" class="form-control form-control-sm validate" placeholder="Your Password">
+                </div>
+                <div class="md-form form-sm mb-4">
+                  <i class="fas fa-lock prefix"></i>
+                  <input type="password" name="password2" class="form-control form-control-sm validate" placeholder="Confirm Password">
+                </div>
+                <div class="text-center form-sm mt-2">
+                  <button class="btn btn-info" action="./register">Sign up<i class="fas fa-sign-in ml-1"></i></button>
+                </div>
+                <div class="options text-right">
+                  <p class="text-center pt-1">Already have an account? <a href="#Login" class="blue-text" action = "./login">Log In</a></p>
+               </div>
+               <div>
+                  {%for message in messages %}
+                  <h3> {{message}} </h3>
+                  {% endfor %}
+               </div>
+              </div>
+            </form>
+        </div>
+                <!--Footer-->
+            <div class="modal-footer" id="rf">
+              <button type="button" class="btn btn-info ml-auto" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+          <!--Main Webpage-->
+          Abc
+</body>
+</html>

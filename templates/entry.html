@@ -1,0 +1,56 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>.topright {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        font-size: 18px;
+      }</style>
+    
+
+    <title>hello, {{user.first_name}}.Welcome to COVID HELP TRACKER application.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
+    <script src="{% static 'js/myScript.js' %}"></script>
+    
+</head>
+<body>
+  
+    <div class="logo">COVID HELP TRACKER</a></div>
+    
+    <li><a  class="topright" href="logout">Logout</a></li>
+   <p> </p>
+   hello, {{user.first_name}}.Welcome to COVID HELP TRACKER application.<br/>
+   here we are accessing your location and using it to plot your location on map.<br/>
+   please confirm below fields and fill the fields.<br/>
+   <br>  <br/>
+   {% if user.profile.is_helper %}
+  You are a HELPER, you can provide help to those who are in need or can provide them with some information.
+   {% else %}
+    You are in NEED OF HELP, we will mark your location on map and provide you with the locations of nearest help for you on map
+   {% endif %}
+          <form action="mapit" method="POST">
+                {% csrf_token %}
+                 Are you a public sector worker(working for government) : <br/>
+
+                  <input type="radio" id="govt" name="bio" value="govt">
+                  <label for="govt">government employee</label><br/>
+                  <input type="radio" id="civilian" name="bio" value="civilian">
+                  <label for="civilian">civilian</label><br/>
+                  <br>  <br/>
+                  
+                  For accuracy please enter below the LATITUDE value written above : <br/>
+                  <input type="number" name="latitude" step="any" min= "-90.000" max="90.000" placeholder="Enter Latitude"><br/>
+                  <br>  <br/>
+                  
+                  For accuracy please enter below the LONGITUDE value written above : <br/>
+                  <input type="number" name="longitude" step="any" min= "-180.000" max="180.000" placeholder="Enter Longitude"><br/>
+                  <br>  <br/>
+                  <input type="submit" value="Submit">
+          </form>
+</body>
+</html>
