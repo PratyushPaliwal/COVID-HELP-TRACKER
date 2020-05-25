@@ -21,7 +21,7 @@
         <script src="{% static 'js/jquery-3.5.0.min.js' %}"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.11&sensor=false" type="text/javascript"></script>
         <script type="text/javascript">
-        // check DOM Ready
+      
         $(document).ready(function() {
             // execute
             (function() {
@@ -36,17 +36,13 @@
                 // init map
                 var map = new google.maps.Map(document.getElementById('map_canvas'), options);
 
-                // NY and CA sample Lat / Lng
-                var southWest = new google.maps.LatLng(40.744656, -74.005966);
-                var northEast = new google.maps.LatLng(34.052234, -118.243685);
-                var lngSpan = northEast.lng() - southWest.lng();
-                var latSpan = northEast.lat() - southWest.lat();
+               
+               
                
                 // set multiple marker
                 {% for x in users %}
                    
-                 //for (var i = 30, j= 80; i < 100, j<150; i++,j++) {
-                    // init markers
+                
                     var i = '{{x.profile.lattitude}}' ;
                     var j = '{{x.profile.longitude}}' ;
                     {% if x.profile.is_helper %}
